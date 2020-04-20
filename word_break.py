@@ -20,11 +20,12 @@ if __name__ == "__main__":
         {"input": ("applepenapple", ["apple", "pen"]), "output": True},
         {"input": ("applepenpple", ["apple", "pen"]), "output": False},
         {"input": ("applepenpenapple", ["apple", "pen"]), "output": True},
-        {"input": ("applepenpenapple", ["applepenpen", "apple"]), "output": True},
+        {"input": ("categorycat", ["category", "cat"]), "output": True},
         {"input": ("catsandog", ["cats", "dog", "sand", "and", "cat"]), "output": False},
-        {"input": ("catsand", ["cats", "dog", "sand", "and", "cat"]), "output": True},
-        {"input": ("catsand", ["cats", "dog", "sand", "cat"]), "output": True},
-        {"input": ("catsand", ["cats", "dog", "sand", "and"]), "output": True},
+        {"input": ("catsand", ["cats", "sand", "and", "cat"]), "output": True},
+        {"input": ("catsand", ["cats", "sand", "cat"]), "output": True},
+        {"input": ("catsand", ["cats", "sand", "and"]), "output": True},
+        {"input": ("catsand", ["cats", "and", "cat"]), "output": True},
     ]
 
     test_results = map(lambda test_pair: solution.wordBreak(*test_pair["input"]) == test_pair["output"], test_examples)
