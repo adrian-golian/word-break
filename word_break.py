@@ -1,4 +1,6 @@
 # word-break challenge solution.
+# Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
+# determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 
 class Solution(object):
     def wordBreak(self, s, wordDict):
@@ -16,7 +18,13 @@ if __name__ == "__main__":
     test_examples = [
         {"input": ("leetcode", ["leet", "code"]), "output": True},
         {"input": ("applepenapple", ["apple", "pen"]), "output": True},
-        {"input": ("catsandog", ["cats", "dog", "sand", "and", "cat"]), "output": False}
+        {"input": ("applepenpple", ["apple", "pen"]), "output": False},
+        {"input": ("applepenpenapple", ["apple", "pen"]), "output": True},
+        {"input": ("applepenpenapple", ["applepenpen", "apple"]), "output": True},
+        {"input": ("catsandog", ["cats", "dog", "sand", "and", "cat"]), "output": False},
+        {"input": ("catsand", ["cats", "dog", "sand", "and", "cat"]), "output": True},
+        {"input": ("catsand", ["cats", "dog", "sand", "cat"]), "output": True},
+        {"input": ("catsand", ["cats", "dog", "sand", "and"]), "output": True},
     ]
 
     test_results = map(lambda test_pair: solution.wordBreak(*test_pair["input"]) == test_pair["output"], test_examples)
