@@ -13,7 +13,87 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        return []
+        print "Full string: {}".format(s), "wordDict: {}".format(wordDict)
+        self.fullstring = s
+
+        self.found_tokens = [m for matches in map(self.get_matches, wordDict) for m in matches]
+        print "Found tokens: {}".format(self.found_tokens)
+        sentences = [[t] for t, _ in enumerate(self.found_tokens)]
+        print "sentences = {}".format(sentences)
+
+        complete_sentences = []
+        done = False
+        while not done:
+            # Grow only valid sentences, one token at a time
+            # (better than generating all token permutations and validating each)
+            print "complete_sentences = {}".format(complete_sentences)
+            sentence_sets = map(self.build_sentences, sentences)
+            sentences = [s for sentences in sentence_sets for s in sentences]
+            print "sentences = {}".format(sentences)
+
+            # Put complete valid sentences aside
+            to_remove = []
+            for i, sentence in enumerate(sentences):
+                if self.is_complete(sentence):
+                    complete_sentences.append(sentences[i])
+                    to_remove.append(i)
+            sentences = [s for i, s in enumerate(sentences) if i not in to_remove]
+            to_remove = []
+
+            if len(sentences) == 0:
+                done = True
+
+        print "Found complete_sentences:\n", map(self.make_string_sentence, complete_sentences)
+        return map(self.make_string_sentence, complete_sentences)
+
+    def make_string_sentence(self, sentence):
+        return " ".join([self.found_tokens[t]["token"] for t in sentence])
+
+    def is_complete(self, sentence):
+        """
+            Check if sentence is complete
+            (whether it makes the fullstring when joined)
+        """
+        print "Checking completeness, sentence: {}".format(sentence)
+        print "".join([self.found_tokens[t]["token"] for t in sentence]), self.fullstring, "".join([self.found_tokens[t]["token"] for t in sentence]) == self.fullstring
+        return "".join([self.found_tokens[t]["token"] for t in sentence]) == self.fullstring
+
+    def build_sentences(self, sentence):
+        """
+            Take a sentence of length N
+            and find all valid sentences of length N+1
+            (so the output can be an empty list!)
+        """
+        last_token = self.found_tokens[sentence[-1]]
+        candidate_token_ids = []
+        for i, token in enumerate(self.found_tokens):
+            if token["start"] == last_token["end"] + 1:
+                candidate_token_ids.append(i)
+        new_sentences = [copy.deepcopy(sentence) + [id] for id in candidate_token_ids]
+        return new_sentences
+
+    def get_matches(self, token):
+        """
+            Find all occurances of a token in the `full string`
+            and output each one in a token object.
+        """
+        return [{"token":token, "start":i, "end":i+len(token)-1} for i in self.find_occurances(token)]
+
+    def find_occurances(self, substring):
+        """ Find occurances of a substring in the full string """
+        return map(lambda match: match.start(), re.finditer(substring, self.fullstring))
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     solution = Solution()
