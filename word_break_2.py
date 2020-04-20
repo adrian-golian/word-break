@@ -19,9 +19,10 @@ if __name__ == "__main__":
     solution = Solution()
 
     test_examples = [
+        {"input": ("pineapplepenapple", ["pineapple", "apple", "pen", "applepen", "pine"]), "output": ["pine apple pen apple", "pineapple pen apple", "pine applepen apple"]},
         {"input": ("leetcode", ["leet", "code"]), "output": ["leet code"]},
-        {"input": ("applepenapple", ["apple", "pen"]), "output": ["apple pen apple"]},
+        {"input": ("applepenapple", ["apple", "pen"]), "output": ["apple pen apple"]}
     ]
 
-    test_results = map(lambda test_pair: solution.wordBreak(*test_pair["input"]) == test_pair["output"], test_examples)
+    test_results = map(lambda test_pair: set(solution.wordBreak(*test_pair["input"])) == set(test_pair["output"]), test_examples)
     print "Test results: {}".format(map(lambda r: "pass" if r else "fail" , test_results))
