@@ -9,7 +9,14 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        return True
+        for token_end in range(1, len(s)+1):
+            if s[:token_end] in wordDict:
+                if token_end == len(s):
+                    return True
+                break
+        else:
+            return False
+        return self.wordBreak(s[token_end:], wordDict)
 
 
 if __name__ == "__main__":
