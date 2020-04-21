@@ -3,7 +3,6 @@
 # add spaces in s to construct a sentence where each word is a valid dictionary word.
 # Return all such possible sentences.
 import re
-import itertools
 import copy
 
 class Solution(object):
